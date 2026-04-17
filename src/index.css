@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Placeholder palette — пересобрать после Часа 2 (visual direction) */
+  --color-bg: #000000;
+  --color-fg: #f4f4f5;
+  --color-muted: #a1a1aa;
+  --color-line: #232326;
+  --color-accent: #ffffff;
+}
+
+@keyframes hero-fill {
+  0% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.25;
+  }
+  10% {
+    opacity: 0.72;
+  }
+  15% {
+    opacity: 0.96;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hero-fill {
+  opacity: 0;
+  animation: hero-fill linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 100vh 350vh;
+}
+
+.sbr-root {
+  --sbr-pi: 0;
+  --sbr-po: 0;
+}
+
+.sbr-group {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.sbr-word {
+  display: inline-block;
+  will-change: filter, opacity, transform;
+  transform-origin: 50% 60%;
+  /* локальный прогресс 0..1 на вход и на выход */
+  --sbr-lpi: clamp(0, (var(--sbr-pi) - var(--sbr-offi)) / var(--sbr-w), 1);
+  --sbr-lpo: clamp(0, (var(--sbr-po) - var(--sbr-offo)) / var(--sbr-w), 1);
+  /* smoothstep — мягкая середина, без рывков на краях волны */
+  --sbr-ei: calc(var(--sbr-lpi) * var(--sbr-lpi) * (3 - 2 * var(--sbr-lpi)));
+  --sbr-eo: calc(var(--sbr-lpo) * var(--sbr-lpo) * (3 - 2 * var(--sbr-lpo)));
+  /* итоговая «чёткость»: раскрыто входом и ещё не зарераскрыто выходом */
+  --sbr-e: calc(var(--sbr-ei) * (1 - var(--sbr-eo)));
+  filter: blur(calc(var(--sbr-blur) * (1 - var(--sbr-e))));
+  opacity: calc(var(--sbr-min-o) + (1 - var(--sbr-min-o)) * var(--sbr-e));
+  transform: translateY(calc(var(--sbr-ty) * (1 - var(--sbr-e))));
+  letter-spacing: calc(var(--sbr-max-sp) * (1 - var(--sbr-e)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbr-word {
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+}
