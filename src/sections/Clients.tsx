@@ -29,7 +29,7 @@ export function Clients() {
       id="clients"
       data-theme={dark ? "dark" : "light"}
       className={cn(
-        "border-b-0 transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
+        "!pt-12 !pb-20 md:!pt-16 md:!pb-24 border-b-0 transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
         dark ? "bg-black text-white" : "bg-white text-black",
       )}
       style={
@@ -70,7 +70,7 @@ export function Clients() {
           </ScrollBlurText>
         </h2>
 
-        <ul className="mt-20 grid grid-cols-2 gap-4 md:mt-28 md:grid-cols-4">
+        <ul className="mt-20 grid grid-cols-2 gap-4 md:mt-24 md:grid-cols-4">
           {clients.map((item) => (
             <li
               key={item.name}

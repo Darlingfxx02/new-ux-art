@@ -65,8 +65,8 @@ export function Cases() {
       {/* Text hero: eyebrow bottom-left, heading globally centered on screen.
           Градиента на этом блоке больше нет — принципы выше уже затемняют фон
           до чёрного, поэтому здесь сразу работаем на тёмной теме. */}
-      <div className="relative h-[60vh]">
-        <Container className="absolute inset-x-0 bottom-10 md:bottom-16">
+      <div className="relative h-[42vh]">
+        <Container className="absolute inset-x-0 bottom-10 md:bottom-14">
           <div className="relative flex items-center justify-center">
             <h2 className="max-w-[28ch] text-center text-2xl font-semibold leading-[1.2] tracking-tight text-white md:text-4xl">
               <ScrollBlurText

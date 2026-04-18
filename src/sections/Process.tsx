@@ -1,5 +1,4 @@
 import { Container } from "@/components/primitives/Container";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { process } from "@/content/process";
 import { ScrollBlurText } from "@/motion/ScrollBlurText";
 
@@ -21,7 +20,6 @@ export function Process() {
 
         <Container className="absolute inset-x-0 bottom-10 md:bottom-16">
           <div className="relative flex items-center justify-center">
-            <Eyebrow className="absolute left-0 -mt-0.5">Принципы</Eyebrow>
             <h2 className="max-w-[32ch] text-center text-2xl font-semibold leading-[1.2] tracking-tight text-white md:text-4xl">
               <ScrollBlurText
                 as="span"

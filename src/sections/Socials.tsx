@@ -18,8 +18,8 @@ export function Socials() {
   );
 
   return (
-    <section id="socials" className="relative bg-black py-40 text-white md:py-56">
-      <Container className="grid gap-16 md:grid-cols-12 md:gap-y-28">
+    <section id="socials" className="relative bg-black pt-32 pb-24 text-white md:pt-52 md:pb-32">
+      <Container className="grid gap-16 md:grid-cols-12 md:gap-y-24">
         <div className="md:col-span-8 md:col-start-5">
           <h2
             className="font-normal leading-[0.95] tracking-[-0.03em]"
@@ -58,28 +58,23 @@ export function Socials() {
         )}
 
         <div className="md:col-span-12">
-          <div className="border-t border-white/10 pt-14 md:pt-20">
+          <div className="border-t border-white/10 pt-12 md:pt-16">
             <ProfileBlock
               profile={studioProfile}
               caption="Процесс, работы, команда."
             />
+            <div
+              data-theme="light"
+              className="relative mt-6 aspect-[21/9] w-full overflow-hidden rounded-3xl md:rounded-[2rem]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=80"
+                alt="Команда UXART"
+                className="block h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
-        </div>
-
-        <div className="md:col-span-12">
-          <ScrollBlurReveal
-            className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl md:rounded-[2rem]"
-            maxBlur={14}
-            translateY={20}
-            minOpacity={0.2}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=80"
-              alt="Команда UXART"
-              className="block h-full w-full object-cover"
-              loading="lazy"
-            />
-          </ScrollBlurReveal>
         </div>
       </Container>
     </section>
@@ -227,7 +222,7 @@ function ProfileBlock({
         </ScrollBlurReveal>
       </div>
 
-      <div className="flex flex-col gap-4 md:col-span-5 md:items-end md:text-right">
+      <div className="flex flex-col gap-4 md:col-span-5 md:items-end md:justify-end md:text-right">
         <div className="text-base font-medium text-white/55">
           {profile.role}
         </div>
