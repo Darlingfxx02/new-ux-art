@@ -69,7 +69,6 @@ export function Cases() {
       <div className="relative h-[60vh]">
         <Container className="absolute inset-x-0 bottom-10 md:bottom-16">
           <div className="relative flex items-center justify-center">
-            <Eyebrow className="absolute left-0 -mt-0.5">Избранные работы</Eyebrow>
             <h2 className="max-w-[28ch] text-center text-2xl font-semibold leading-[1.2] tracking-tight text-white md:text-4xl">
               <ScrollBlurText
                 as="span"

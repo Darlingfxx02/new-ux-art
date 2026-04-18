@@ -20,11 +20,7 @@ export function Socials() {
   return (
     <section id="socials" className="relative bg-black py-40 text-white md:py-56">
       <Container className="grid gap-16 md:grid-cols-12 md:gap-y-28">
-        <div className="md:col-span-4">
-          <div className="text-base font-medium text-white/55">Соцсети</div>
-        </div>
-
-        <div className="md:col-span-8">
+        <div className="md:col-span-8 md:col-start-5">
           <h2
             className="font-normal leading-[0.95] tracking-[-0.03em]"
             style={{ fontSize: "clamp(2rem, 4.5vw, 4.25rem)" }}
@@ -88,6 +84,7 @@ function CeoTelegramHero({
       <div className="md:col-span-5">
         <div
           data-theme="light"
+          data-theme-scope="logo"
           className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-white"
           style={{
             clipPath: "inset(0 round 1rem)",
@@ -188,26 +185,45 @@ function ProfileBlock({
   return (
     <div className="grid gap-10 md:grid-cols-12">
       <div className="flex flex-col gap-6 md:col-span-7">
-        <h3
+        <ScrollBlurText
+          as="h3"
           className="font-normal leading-[1] tracking-[-0.02em]"
           style={{ fontSize: "clamp(1.75rem, 4vw, 3.75rem)" }}
+          granularity="word"
+          maxBlur={14}
+          translateY={16}
+          waveWidth={1.1}
         >
           {profile.name}
-        </h3>
-        <ul className="flex flex-wrap items-start gap-2">
+        </ScrollBlurText>
+        <ScrollBlurReveal
+          as="ul"
+          className="flex flex-wrap items-start gap-2"
+          maxBlur={10}
+          translateY={6}
+          minOpacity={0.2}
+        >
           {profile.channels.map((channel) => (
             <li key={`${profile.name}-${channel.platform}`}>
               <ChannelPill channel={channel} />
             </li>
           ))}
-        </ul>
+        </ScrollBlurReveal>
       </div>
 
       <div className="flex flex-col gap-4 md:col-span-5 md:items-end md:text-right">
         <div className="text-base font-medium text-white/55">
           {profile.role}
         </div>
-        <p className="max-w-[32ch] text-lg text-white/55">{caption}</p>
+        <ScrollBlurText
+          as="p"
+          className="max-w-[32ch] text-lg text-white/55"
+          granularity="word"
+          maxBlur={10}
+          translateY={6}
+        >
+          {caption}
+        </ScrollBlurText>
       </div>
     </div>
   );

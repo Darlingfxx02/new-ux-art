@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Container } from "@/components/primitives/Container";
 import { Section } from "@/components/primitives/Section";
+import { ScrollBlurText } from "@/motion/ScrollBlurText";
+import { ScrollBlurReveal } from "@/motion/ScrollBlurReveal";
 import { posts } from "@/content/blog";
 
 const FIRST_ROW = 4;
@@ -66,12 +68,43 @@ export function Blog() {
       <Container>
         <div className="mb-16 flex items-end justify-between">
           <div>
-            <div className="text-base font-medium text-white/55">Пишем на VC.RU</div>
+            <ScrollBlurText
+              as="div"
+              className="text-base font-medium text-white/55"
+              granularity="word"
+              maxBlur={10}
+              translateY={6}
+            >
+              Пишем на VC.RU
+            </ScrollBlurText>
             <h2 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-white md:text-4xl">
-              Статьи.<span className="text-white/45"> От команды.</span>
+              <ScrollBlurText
+                as="span"
+                granularity="word"
+                maxBlur={12}
+                translateY={8}
+                waveWidth={0.8}
+              >
+                Статьи.
+              </ScrollBlurText>
+              <ScrollBlurText
+                as="span"
+                className="text-white/45"
+                granularity="word"
+                maxBlur={12}
+                translateY={8}
+                waveWidth={0.8}
+              >
+                {" От команды."}
+              </ScrollBlurText>
             </h2>
           </div>
-          <div className="hidden items-center gap-2 md:flex">
+          <ScrollBlurReveal
+            className="hidden items-center gap-2 md:flex"
+            maxBlur={10}
+            translateY={6}
+            minOpacity={0.2}
+          >
             <button
               type="button"
               onClick={() => scrollBy(-1)}
@@ -88,7 +121,7 @@ export function Blog() {
             >
               →
             </button>
-          </div>
+          </ScrollBlurReveal>
         </div>
       </Container>
 
@@ -150,20 +183,38 @@ export function Blog() {
                   </div>
 
                   <div className="mt-6 flex flex-1 flex-col">
-                    <div className="flex items-center gap-2 text-sm font-medium text-white/55">
+                    <ScrollBlurReveal
+                      className="flex items-center gap-2 text-sm font-medium text-white/55"
+                      maxBlur={8}
+                      translateY={4}
+                      minOpacity={0.2}
+                    >
                       <span>{post.date}</span>
                       <span aria-hidden>·</span>
                       <span>{post.readTime}</span>
-                    </div>
+                    </ScrollBlurReveal>
 
-                    <h3 className="mt-3 text-lg font-medium leading-[1.2] tracking-[-0.01em] text-white md:text-[1.375rem]">
+                    <ScrollBlurText
+                      as="h3"
+                      className="mt-3 text-lg font-medium leading-[1.2] tracking-[-0.01em] text-white md:text-[1.375rem]"
+                      granularity="word"
+                      maxBlur={12}
+                      translateY={6}
+                      waveWidth={0.9}
+                    >
                       {post.title}
-                    </h3>
+                    </ScrollBlurText>
 
-                    <span className="mt-6 inline-flex items-center gap-1.5 text-base font-medium text-white/55 transition-colors group-hover:text-white">
+                    <ScrollBlurReveal
+                      as="span"
+                      className="mt-6 inline-flex items-center gap-1.5 text-base font-medium text-white/55 transition-colors group-hover:text-white"
+                      maxBlur={8}
+                      translateY={4}
+                      minOpacity={0.2}
+                    >
                       Читать
                       <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-                    </span>
+                    </ScrollBlurReveal>
                   </div>
                 </a>
               </div>

@@ -27,6 +27,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [onLight, setOnLight] = useState(false);
+  const [onLightFull, setOnLightFull] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -41,12 +42,17 @@ export function Header() {
       const sections = document.querySelectorAll<HTMLElement>(
         '[data-theme="light"]',
       );
-      let over = false;
+      let overAny = false;
+      let overFull = false;
       sections.forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.top <= probeY && r.bottom >= probeY) over = true;
+        if (r.top <= probeY && r.bottom >= probeY) {
+          overAny = true;
+          if (el.dataset.themeScope !== "logo") overFull = true;
+        }
       });
-      setOnLight(over);
+      setOnLight(overAny);
+      setOnLightFull(overFull);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -73,6 +79,7 @@ export function Header() {
   const showBurger = scrolled && !open;
   const showText = !compact;
   const dark = onLight && !open;
+  const darkFull = onLightFull && !open;
 
   return (
     <>
@@ -91,7 +98,11 @@ export function Header() {
             aria-haspopup="menu"
             aria-expanded={open}
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
-            className={`relative inline-flex h-11 items-center justify-center overflow-hidden rounded-2xl bg-white/10 text-white backdrop-blur-md text-sm font-medium transition-[width] duration-300 ease-[cubic-bezier(.19,1,.22,1)] hover:bg-white/15 md:h-12 md:text-base ${compact ? "w-11 md:w-12" : "w-[96px] md:w-[108px]"}`}
+            className={`relative inline-flex h-11 items-center justify-center overflow-hidden rounded-2xl backdrop-blur-md text-sm font-medium transition-[width,background-color,color] duration-300 ease-[cubic-bezier(.19,1,.22,1)] md:h-12 md:text-base ${
+              darkFull
+                ? "bg-black/10 text-black hover:bg-black/15"
+                : "bg-white/10 text-white hover:bg-white/15"
+            } ${compact ? "w-11 md:w-12" : "w-[96px] md:w-[108px]"}`}
           >
             <span
               className={`pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${showText ? "opacity-100" : "opacity-0"}`}
