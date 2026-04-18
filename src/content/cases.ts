@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export interface CaseItem {
   slug: string;
   title: string;
@@ -14,7 +16,7 @@ export const cases: CaseItem[] = [
     client: "Vidaq",
     tags: ["Product", "Video"],
     year: 2024,
-    image: "/media/uxart/e9ccec_vidaq.svg",
+    image: asset("/media/uxart/e9ccec_vidaq.svg"),
   },
   {
     slug: "riv-gauche",
@@ -22,7 +24,7 @@ export const cases: CaseItem[] = [
     client: "РИВ ГОШ",
     tags: ["Intranet", "Portal"],
     year: 2022,
-    image: "/media/uxart/4d057e__.svg",
+    image: asset("/media/uxart/4d057e__.svg"),
   },
   {
     slug: "rosgosstrakh",
@@ -30,7 +32,7 @@ export const cases: CaseItem[] = [
     client: "РОСГОССТРАХ",
     tags: ["Intranet", "Enterprise"],
     year: 2023,
-    image: "/media/uxart/9ef29c_photo.svg",
+    image: asset("/media/uxart/9ef29c_photo.svg"),
   },
   {
     slug: "peterburg-nedv",
@@ -38,7 +40,7 @@ export const cases: CaseItem[] = [
     client: "Setl Group",
     tags: ["Intranet", "Portal"],
     year: 2024,
-    image: "/media/uxart/eff86f_photo.png",
+    image: asset("/media/uxart/eff86f_photo.png"),
   },
   {
     slug: "vsmpo-avisma",
@@ -46,7 +48,7 @@ export const cases: CaseItem[] = [
     client: "ВСМПО-АВИСМА",
     tags: ["Intranet", "Industry"],
     year: 2024,
-    image: "/media/uxart/9dd23b_photo.png",
+    image: asset("/media/uxart/9dd23b_photo.png"),
   },
   {
     slug: "club-first",
@@ -54,7 +56,7 @@ export const cases: CaseItem[] = [
     client: "СБЕР",
     tags: ["Product", "Community"],
     year: 2023,
-    image: "/media/uxart/9b73d2_vlcsnap-2025-08-22-0.png",
+    image: asset("/media/uxart/9b73d2_vlcsnap-2025-08-22-0.png"),
   },
   {
     slug: "tn-life",
@@ -62,7 +64,7 @@ export const cases: CaseItem[] = [
     client: "ТЕХНОНИКОЛЬ",
     tags: ["Product", "HR"],
     year: 2024,
-    image: "/media/uxart/a45ce7_life.svg",
+    image: asset("/media/uxart/a45ce7_life.svg"),
   },
   {
     slug: "getblock",
@@ -70,7 +72,7 @@ export const cases: CaseItem[] = [
     client: "GetBlock",
     tags: ["Product", "Web3"],
     year: 2023,
-    image: "/media/uxart/f250ad_Frame_1948755918.png",
+    image: asset("/media/uxart/f250ad_Frame_1948755918.png"),
   },
   {
     slug: "hihub",
@@ -78,6 +80,6 @@ export const cases: CaseItem[] = [
     client: "HiHub",
     tags: ["Product", "SaaS"],
     year: 2023,
-    image: "/media/uxart/e29164_7_6.png",
+    image: asset("/media/uxart/e29164_7_6.png"),
   },
 ];

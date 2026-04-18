@@ -7,6 +7,7 @@ import {
   type SocialChannel,
   type SocialProfile,
 } from "@/content/socials";
+import { asset } from "@/lib/asset";
 
 export function Socials() {
   const ceoTelegram = ceoProfile.channels.find(
@@ -96,7 +97,7 @@ function CeoTelegramHero({
           } as React.CSSProperties}
         >
           <img
-            src="/media/socials/konakov.png"
+            src={asset("/media/socials/konakov.png")}
             alt="Артём Конаков, CEO UXART"
             className="block h-full w-full object-cover object-top"
             loading="lazy"

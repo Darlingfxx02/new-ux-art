@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { asset } from "@/lib/asset";
 
 // Сетка совпадает с Container: max-w-[1680px] px-3 md:px-5.
 // Скругление — как rounded-2xl у следующего блока (Clients).
@@ -185,7 +186,7 @@ export function Showreel() {
           {/* TODO placeholder: заменить на итоговый шоурил UXART */}
           <video
             ref={videoRef}
-            src="/media/placeholders/5273c3_1751470729-home-desktop-sizzle-july2.mp4"
+            src={asset("/media/placeholders/5273c3_1751470729-home-desktop-sizzle-july2.mp4")}
             autoPlay
             loop
             muted

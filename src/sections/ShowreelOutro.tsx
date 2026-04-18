@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { asset } from "@/lib/asset";
 
 // Дубль Showreel, но без exit-снапа в сетку: на выходе кадр остаётся full-bleed,
 // а за ним по нормальному flow появляется футер.
@@ -125,7 +126,7 @@ export function ShowreelOutro() {
         >
           <video
             ref={videoRef}
-            src="/media/placeholders/5273c3_1751470729-home-desktop-sizzle-july2.mp4"
+            src={asset("/media/placeholders/5273c3_1751470729-home-desktop-sizzle-july2.mp4")}
             autoPlay
             loop
             muted

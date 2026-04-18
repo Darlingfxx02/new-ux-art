@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Container } from "@/components/primitives/Container";
 import { stats, type StatItem as StatItemData } from "@/content/stats";
 import { ScrollBlurText } from "@/motion/ScrollBlurText";
+import { asset } from "@/lib/asset";
 
 export function Hero() {
   const [tl, tr, bottom] = stats;
@@ -58,7 +59,7 @@ export function Hero() {
       <div className="sticky top-0 h-screen overflow-hidden">
         <video
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-          src="/media/uxart/027952_video.mp4"
+          src={asset("/media/uxart/027952_video.mp4")}
           autoPlay
           loop
           muted
