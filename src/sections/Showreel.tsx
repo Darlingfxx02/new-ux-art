@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { asset } from "@/lib/asset";
 
-// Сетка совпадает с Container: max-w-[1680px] px-3 md:px-5.
+// Сетка совпадает с Container: max-w-[1880px] px-3 md:px-5.
 // Скругление — как rounded-2xl у следующего блока (Clients).
-const GRID_MAX = 1680;
+const GRID_MAX = 1880;
 const GRID_PAD_MOBILE = 12;
 const GRID_PAD_DESKTOP = 20;
 const GRID_RADIUS = 16;

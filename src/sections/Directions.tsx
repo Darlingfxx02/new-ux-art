@@ -14,7 +14,7 @@ import { Cases } from "@/sections/Cases";
 // началу entry-фазы. Без этого фрейм геометрически растёт в центр
 // sticky, который сам ещё едет вместе со скроллом, и ширина визуально
 // замыкается раньше, чем верх касается вьюпорта.
-const GRID_MAX = 1680;
+const GRID_MAX = 1880;
 const GRID_PAD_MOBILE = 12;
 const GRID_PAD_DESKTOP = 20;
 const GRID_RADIUS = 16;
@@ -28,6 +28,27 @@ export function Directions() {
   const titleRefs = useRef<Array<HTMLDivElement | null>>([]);
   const descRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [active, setActive] = useState(0);
+  // Верх Directions следует за темой Clients: пока Clients белый, pre-entry
+  // зона держится белой, чтобы не было видимой границы при экранах выше
+  // высоты Clients-блока (fullscreen 1920×1080 и больше). Правило и
+  // таймингу совпадают с Clients.tsx, так что переход идёт синхронно.
+  const [prevLight, setPrevLight] = useState(false);
+
+  useEffect(() => {
+    const clients = document.getElementById("clients");
+    if (!clients) return;
+    const update = () => {
+      const r = clients.getBoundingClientRect();
+      setPrevLight(r.bottom > window.innerHeight);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     let raf: number | null = null;
@@ -130,7 +151,10 @@ export function Directions() {
   }, []);
 
   return (
-    <div className="relative bg-black text-white">
+    <div
+      className="relative text-white transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]"
+      style={{ backgroundColor: prevLight ? "#ffffff" : "#000000" }}
+    >
       {/* pre-entry spacer: даёт sticky-слою прилипнуть к top:0 ДО старта
           entry-фазы — тогда ширина и верхняя грань приходят к вьюпорту
           одновременно. Высота = ENTRY_FRACTION вьюпорта. */}

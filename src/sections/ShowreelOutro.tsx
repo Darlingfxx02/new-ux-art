@@ -6,7 +6,7 @@ import { asset } from "@/lib/asset";
 const ENTRY_VIEWPORTS = 0.5;
 const HOLD_VIEWPORTS = 0.5;
 const ENTRY_SCALE = 0.7;
-const GRID_MAX = 1680;
+const GRID_MAX = 1880;
 const GRID_PAD_MOBILE = 12;
 const GRID_PAD_DESKTOP = 20;
 const GRID_RADIUS = 16;

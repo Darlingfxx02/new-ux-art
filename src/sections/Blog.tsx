@@ -126,7 +126,7 @@ export function Blog() {
       </Container>
 
       {/* Горизонтальный рейл — full-bleed по ширине, но левый/правый padding
-          совпадает с контентной границей Container (max-w-1680, px-5), чтобы
+          совпадает с контентной границей Container (max-w-1880, px-5), чтобы
           первая карточка стояла ровно под «Статьи.». */}
       <div
         ref={railRef}
@@ -136,8 +136,8 @@ export function Blog() {
           className="flex gap-6 md:gap-8"
           style={{
             scrollSnapType: "x mandatory",
-            paddingInline: "max(0.75rem, calc((100vw - 1680px) / 2 + 1.25rem))",
-            scrollPaddingInlineStart: "max(0.75rem, calc((100vw - 1680px) / 2 + 1.25rem))",
+            paddingInline: "max(0.75rem, calc((100vw - 1880px) / 2 + 1.25rem))",
+            scrollPaddingInlineStart: "max(0.75rem, calc((100vw - 1880px) / 2 + 1.25rem))",
           }}
         >
           {posts.map((post, i) => (
@@ -147,7 +147,7 @@ export function Blog() {
               data-card
               className="shrink-0 snap-start"
               style={{
-                width: "clamp(260px, calc((min(100vw,1680px) - 56px) / 4), 380px)",
+                width: "clamp(260px, calc((min(100vw,1880px) - 56px) / 4), 380px)",
                 willChange: i < FIRST_ROW ? "transform" : undefined,
               }}
             >

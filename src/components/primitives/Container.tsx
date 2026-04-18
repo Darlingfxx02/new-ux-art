@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 export function Container({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("mx-auto w-full max-w-[1680px] px-3 md:px-5", className)}
+      className={cn("mx-auto w-full max-w-[1880px] px-3 md:px-5", className)}
       {...props}
     />
   );
