@@ -29,7 +29,7 @@ export function Clients() {
       id="clients"
       data-theme={dark ? "dark" : "light"}
       className={cn(
-        "transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
+        "border-b-0 transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
         dark ? "bg-black text-white" : "bg-white text-black",
       )}
       style={

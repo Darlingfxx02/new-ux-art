@@ -1,18 +1,18 @@
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/Hero";
 import { Showreel } from "@/sections/Showreel";
-import { Value } from "@/sections/Value";
 import { Clients } from "@/sections/Clients";
 import { Directions } from "@/sections/Directions";
-import { Services } from "@/sections/Services";
-import { Cases } from "@/sections/Cases";
-import { Process } from "@/sections/Process";
+// import { Team } from "@/sections/Team"; // временно отключён
 import { Socials } from "@/sections/Socials";
 import { Blog } from "@/sections/Blog";
 import { CTA } from "@/sections/CTA";
-import { Footer } from "@/sections/Footer";
+import { HeroOutro } from "@/sections/HeroOutro";
+import { ShowreelOutro } from "@/sections/ShowreelOutro";
+import { useSmoothScroll } from "@/lib/useSmoothScroll";
 
 function App() {
+  useSmoothScroll();
   return (
     <>
       <Header />
@@ -21,15 +21,12 @@ function App() {
         <Showreel />
         <Clients />
         <Directions />
-        <Value />
-        <Cases />
-        <Services />
-        <Process />
         <Socials />
         <Blog />
+        <HeroOutro />
+        <ShowreelOutro />
         <CTA />
       </main>
-      <Footer />
     </>
   );
 }

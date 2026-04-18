@@ -20,9 +20,7 @@ type ScrollBlurTextProps = {
   translateY?: number;
   /** Минимальная opacity у не раскрытой буквы. */
   minOpacity?: number;
-  /** Максимальный letter-spacing (в em) у не раскрытой буквы. Применяется только при align="left". */
-  maxSpacing?: number;
-  /** Выравнивание текста. Letter-spacing раздвигается только для "left". */
+  /** Выравнивание текста. Управляет направлением translateY-сдвига и не более. */
   align?: "left" | "center" | "right";
   /**
    * Доля диагонали (0..1), которую занимает «волна» раскрытия.
@@ -46,7 +44,7 @@ type ScrollBlurTextProps = {
   blurOnExit?: boolean;
   /**
    * Гранулярность анимации: "letter" — каждая буква независимо,
-   * "word" — слово как единое целое (все буквы в слове одновременно).
+   * "word" — слово как единое целое (один composited-слой на слово).
    */
   granularity?: "letter" | "word";
 };
@@ -59,7 +57,6 @@ export function ScrollBlurText({
   maxBlur = 14,
   translateY = 8,
   minOpacity = 0.2,
-  maxSpacing = 0.18,
   align = "left",
   waveWidth = 1.1,
   horizontalBias = 0.45,
@@ -67,34 +64,39 @@ export function ScrollBlurText({
   blurOnExit = true,
   granularity = "letter",
 }: ScrollBlurTextProps) {
-  const effectiveSpacing = align === "left" ? maxSpacing : 0;
   const effectiveTranslateY = align === "left" ? 0 : translateY;
   const containerRef = useRef<HTMLElement | null>(null);
-  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const unitRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [positions, setPositions] = useState<number[]>([]);
-  const progressRef = useRef(0);
+  const progressRef = useRef<{ pi: number; po: number }>({ pi: -1, po: -1 });
   const rafRef = useRef<number | null>(null);
 
   const tokens = useMemo(() => children.split(/(\s+)/), [children]);
-  const totalLetters = useMemo(
-    () =>
-      tokens.reduce(
-        (acc, t) => (/^\s+$/.test(t) ? acc : acc + [...t].length),
-        0,
-      ),
-    [tokens],
-  );
-  const letterToWord = useMemo(() => {
-    const map: number[] = [];
-    let wordIdx = 0;
+
+  // Разбиение на «юниты» анимации: буква или слово целиком.
+  // Один юнит = один <span> с blur-фильтром = один composited-слой.
+  const units = useMemo(() => {
+    const out: { text: string; leadingSpace: string }[] = [];
+    let pendingSpace = "";
     tokens.forEach((chunk) => {
-      if (/^\s+$/.test(chunk)) return;
-      const len = [...chunk].length;
-      for (let i = 0; i < len; i += 1) map.push(wordIdx);
-      wordIdx += 1;
+      if (/^\s+$/.test(chunk)) {
+        pendingSpace += chunk;
+        return;
+      }
+      if (granularity === "word") {
+        out.push({ text: chunk, leadingSpace: pendingSpace });
+        pendingSpace = "";
+      } else {
+        [...chunk].forEach((ch, i) => {
+          out.push({ text: ch, leadingSpace: i === 0 ? pendingSpace : "" });
+        });
+        pendingSpace = "";
+      }
     });
-    return map;
-  }, [tokens]);
+    return out;
+  }, [tokens, granularity]);
+
+  const unitCount = units.length;
 
   useLayoutEffect(() => {
     const measure = () => {
@@ -102,7 +104,7 @@ export function ScrollBlurText({
       if (!container) return;
       const crect = container.getBoundingClientRect();
       const raw: { x: number; y: number }[] = [];
-      letterRefs.current.forEach((el) => {
+      unitRefs.current.forEach((el) => {
         if (!el) {
           raw.push({ x: 0, y: 0 });
           return;
@@ -124,16 +126,7 @@ export function ScrollBlurText({
       const min = Math.min(...norm);
       const max = Math.max(...norm);
       const span = max - min || 1;
-      let normalized = norm.map((n) => (n - min) / span);
-      if (granularity === "word") {
-        const wordMin = new Map<number, number>();
-        normalized.forEach((n, i) => {
-          const w = letterToWord[i];
-          const prev = wordMin.get(w);
-          if (prev === undefined || n < prev) wordMin.set(w, n);
-        });
-        normalized = normalized.map((_, i) => wordMin.get(letterToWord[i]) ?? 0);
-      }
+      const normalized = norm.map((n) => (n - min) / span);
       setPositions(normalized);
     };
     measure();
@@ -144,13 +137,14 @@ export function ScrollBlurText({
       ro.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [totalLetters, horizontalBias, granularity]);
+  }, [unitCount, horizontalBias]);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    // читаем ref свежо на каждом тике, чтобы переживать HMR/перемонт DOM
     const update = () => {
       rafRef.current = null;
+      const el = containerRef.current;
+      if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
       const h = rect.height;
@@ -164,9 +158,10 @@ export function ScrollBlurText({
             Math.min(1, (edgeOffset - rect.top) / (h + edgeOffset)),
           )
         : 0;
-      const next = enter + exit * 10; // дешёвая композитная сигнатура
-      if (next !== progressRef.current) {
-        progressRef.current = next;
+      const prev = progressRef.current;
+      if (prev.pi !== enter || prev.po !== exit) {
+        prev.pi = enter;
+        prev.po = exit;
         el.style.setProperty("--sbr-pi", String(enter));
         el.style.setProperty("--sbr-po", String(exit));
       }
@@ -182,45 +177,35 @@ export function ScrollBlurText({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     };
   }, [edgeOffset, blurOnExit]);
 
-  let letterIdx = 0;
-  const nodes: ReactNode[] = tokens.map((chunk, ti) => {
-    if (/^\s+$/.test(chunk)) return chunk;
-    const letters = [...chunk];
-    return (
-      <span key={ti} className="sbr-group">
-        {letters.map((ch, li) => {
-          const idx = letterIdx++;
-          const pos =
-            positions[idx] ?? idx / Math.max(1, totalLetters - 1);
-          const offIn = pos * (1 - waveWidth);
-          const offOut = pos * (1 - waveWidth);
-          return (
-            <span
-              key={li}
-              ref={(node) => {
-                letterRefs.current[idx] = node;
-              }}
-              className="sbr-word"
-              style={
-                {
-                  "--sbr-offi": offIn,
-                  "--sbr-offo": offOut,
-                  "--sbr-w": waveWidth,
-                  "--sbr-blur": `${maxBlur}px`,
-                  "--sbr-ty": `${effectiveTranslateY}px`,
-                  "--sbr-min-o": minOpacity,
-                  "--sbr-max-sp": `${effectiveSpacing}em`,
-                } as React.CSSProperties
-              }
-            >
-              {ch}
-            </span>
-          );
-        })}
-      </span>
+  const nodes: ReactNode[] = [];
+  units.forEach((unit, idx) => {
+    if (unit.leadingSpace) nodes.push(unit.leadingSpace);
+    const pos = positions[idx] ?? idx / Math.max(1, unitCount - 1);
+    const off = pos * (1 - waveWidth);
+    nodes.push(
+      <span
+        key={idx}
+        ref={(node) => {
+          unitRefs.current[idx] = node;
+        }}
+        className="sbr-word"
+        style={
+          {
+            "--sbr-offi": off,
+            "--sbr-offo": off,
+            "--sbr-w": waveWidth,
+            "--sbr-blur": `${maxBlur}px`,
+            "--sbr-ty": `${effectiveTranslateY}px`,
+            "--sbr-min-o": minOpacity,
+          } as React.CSSProperties
+        }
+      >
+        {unit.text}
+      </span>,
     );
   });
 

@@ -5,16 +5,14 @@ import { ScrollBlurText } from "@/motion/ScrollBlurText";
 
 export function Hero() {
   const [tl, tr, bottom] = stats;
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const dimTriggerRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const el = triggerRef.current;
+    const el = dimTriggerRef.current;
     const overlay = overlayRef.current;
-    console.log("[hero] effect el=" + !!el + " overlay=" + !!overlay);
     if (!el || !overlay) return;
-    console.log("[hero] starting rAF");
     let raf = 0;
     let last: boolean | null = null;
     let prevY = window.scrollY;
@@ -37,12 +35,13 @@ export function Hero() {
         Math.min(2400, 2400 - velocity * 1100),
       );
       overlay.style.transitionDuration = `${duration}ms`;
-      (window as any).__heroTick = ((window as any).__heroTick || 0) + 1;
-      if ((window as any).__heroTick < 3) console.log("[hero] tick", (window as any).__heroTick, duration);
 
       const rect = el.getBoundingClientRect();
-      const threshold = window.innerHeight * 1.0;
-      const next = rect.top <= threshold;
+      // Затемнение включается, когда центр блока TOP-10 доходит
+      // до середины экрана, а не в момент его первого появления.
+      const threshold = window.innerHeight * 0.5;
+      const triggerPoint = rect.top + rect.height / 2;
+      const next = triggerPoint <= threshold;
       if (next !== last) {
         last = next;
         setDark(next);
@@ -54,7 +53,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative h-[260vh] bg-black">
+    <section id="hero" className="relative h-[232vh] bg-black">
       {/* Sticky stage: video + black dim overlay. Dim sits under text but over video. */}
       <div className="sticky top-0 h-screen overflow-hidden">
         <video
@@ -78,7 +77,7 @@ export function Hero() {
       {/* Постоянный градиент: от верха второго экрана до низа блока (где видео уходит). 0% сверху → 40% внизу. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[100vh] h-[200vh]"
+        className="pointer-events-none absolute inset-x-0 top-[100vh] h-[132vh]"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%)",
@@ -107,18 +106,15 @@ export function Hero() {
       {/* Stats — always on top of the dim overlay */}
       <div
         id="stats"
-        className="pointer-events-none absolute inset-x-0 top-[160vh] h-screen"
+        className="pointer-events-none absolute inset-x-0 top-[132vh] h-screen"
       >
-        <Container className="relative flex h-full flex-col justify-between pt-48 pb-12 md:pt-56 md:pb-16">
-          <div
-            ref={triggerRef}
-            className="flex items-start justify-between gap-6"
-          >
+        <Container className="relative flex h-full flex-col justify-between pt-28 pb-12 md:pt-32 md:pb-16">
+          <div className="flex items-start justify-between gap-6">
             <Stat item={tl} />
             <Stat item={tr} align="right" />
           </div>
           <div className="flex items-end justify-center">
-            <Stat item={bottom} align="center" />
+            <Stat item={bottom} align="center" triggerRef={dimTriggerRef} />
           </div>
         </Container>
       </div>
@@ -129,9 +125,11 @@ export function Hero() {
 function Stat({
   item,
   align = "left",
+  triggerRef,
 }: {
   item: StatItemData;
   align?: "left" | "right" | "center";
+  triggerRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   const alignCls =
     align === "right"
@@ -140,7 +138,7 @@ function Stat({
         ? "items-center text-center"
         : "items-start text-left";
   return (
-    <div className={`flex flex-col gap-3 ${alignCls}`}>
+    <div ref={triggerRef} className={`flex flex-col gap-3 ${alignCls}`}>
       <ScrollBlurText
         as="span"
         className="font-medium leading-[0.9] tracking-tight text-white"
@@ -154,7 +152,6 @@ function Stat({
         className="text-base font-medium tracking-[0.02em] text-white/70 md:text-lg"
         maxBlur={8}
         translateY={4}
-        maxSpacing={0.12}
         align={align}
       >
         {item.label}
