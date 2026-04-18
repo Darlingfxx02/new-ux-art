@@ -75,10 +75,8 @@ export function Clients() {
             <li
               key={item.name}
               className={cn(
-                "group flex aspect-[4/3] items-center justify-center rounded-2xl p-8 transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
-                dark
-                  ? "bg-white/[0.04] hover:bg-white/[0.08]"
-                  : "bg-[#f5f5f7] hover:bg-[#eeeef1]",
+                "flex aspect-[4/3] items-center justify-center rounded-2xl p-8 transition-colors duration-500 ease-[cubic-bezier(.19,1,.22,1)]",
+                dark ? "bg-white/[0.04]" : "bg-[#f5f5f7]",
               )}
             >
               <img
@@ -86,7 +84,7 @@ export function Clients() {
                 alt={item.name}
                 loading="lazy"
                 className={cn(
-                  "h-auto max-h-10 w-full object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100",
+                  "h-auto max-h-10 w-full object-contain opacity-80",
                   item.logoClassName,
                 )}
               />
