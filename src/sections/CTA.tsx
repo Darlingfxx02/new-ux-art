@@ -9,7 +9,7 @@ export function CTA() {
     >
       <Container className="flex flex-1 flex-col items-start justify-center gap-10">
         <h2 className="max-w-[22ch] text-4xl font-medium leading-[1.05] tracking-tight md:text-7xl">
-          Один шаг<span className="text-black/45"> до крутого проекта.</span>
+          Один шаг<span className="text-black/45"> до крутого проекта</span>
         </h2>
         <a
           href="mailto:hello@uxart.ru"

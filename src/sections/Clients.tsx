@@ -53,7 +53,7 @@ export function Clients() {
             waveWidth={0.6}
             horizontalBias={0.2}
           >
-            С нами работают бренды.
+            С нами работают бренды
           </ScrollBlurText>
           {" "}
           <ScrollBlurText
@@ -66,7 +66,7 @@ export function Clients() {
             waveWidth={0.6}
             horizontalBias={0.2}
           >
-            От стартапов до холдингов — банки, телеком, ретейл, промышленность, медиа.
+            От стартапов до холдингов — банки, телеком, ретейл, промышленность, медиа
           </ScrollBlurText>
         </h2>
 

@@ -33,7 +33,7 @@ export function Socials() {
               granularity="word"
               waveWidth={1.1}
             >
-              Будем на связи.
+              Будем на связи
             </ScrollBlurText>
             <ScrollBlurText
               as="span"
@@ -42,7 +42,7 @@ export function Socials() {
               translateY={6}
               granularity="word"
             >
-              Рассказываем о жизни студии.
+              Рассказываем о жизни студии
             </ScrollBlurText>
           </h2>
         </div>
@@ -61,7 +61,7 @@ export function Socials() {
           <div className="border-t border-white/10 pt-12 md:pt-16">
             <ProfileBlock
               profile={studioProfile}
-              caption="Процесс, работы, команда."
+              caption="Процесс, работы, команда"
             />
             <div
               data-theme="light"
@@ -140,7 +140,7 @@ function CeoTelegramHero({
               translateY={16}
               waveWidth={1.1}
             >
-              {`.${channel.followers ? ` ${channel.followers} подписчиков.` : ""}`}
+              {channel.followers ? ` · ${channel.followers} подписчиков` : ""}
             </ScrollBlurText>
           </h3>
 

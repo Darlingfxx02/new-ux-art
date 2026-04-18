@@ -56,7 +56,7 @@ export function Team() {
               translateY={16}
               granularity="word"
             >
-              Семеро на чёрном.
+              Семеро на чёрном
             </ScrollBlurText>
             <p className="mt-6 max-w-[42ch] text-base leading-[1.55] text-white/55 md:text-lg">
               Маленькая студия с большим характером. Каждый проект ведут

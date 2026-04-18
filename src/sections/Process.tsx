@@ -30,7 +30,7 @@ export function Process() {
                 waveWidth={0.6}
                 horizontalBias={0.2}
               >
-                Понимаем, что делаем.
+                Понимаем, что делаем
               </ScrollBlurText>
               {" "}
               <ScrollBlurText
@@ -43,7 +43,7 @@ export function Process() {
                 waveWidth={0.6}
                 horizontalBias={0.2}
               >
-                В любом направлении.
+                В любом направлении
               </ScrollBlurText>
             </h2>
           </div>

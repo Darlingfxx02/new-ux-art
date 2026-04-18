@@ -78,7 +78,7 @@ export function Cases() {
                 waveWidth={0.6}
                 horizontalBias={0.2}
               >
-                Работы.
+                Работы
               </ScrollBlurText>
               {" "}
               <ScrollBlurText
@@ -91,7 +91,7 @@ export function Cases() {
                 waveWidth={0.6}
                 horizontalBias={0.2}
               >
-                С деталями.
+                С деталями
               </ScrollBlurText>
             </h2>
           </div>

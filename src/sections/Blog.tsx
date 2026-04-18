@@ -85,7 +85,7 @@ export function Blog() {
                 translateY={8}
                 waveWidth={0.8}
               >
-                Статьи.
+                Статьи
               </ScrollBlurText>
               <ScrollBlurText
                 as="span"
@@ -95,7 +95,7 @@ export function Blog() {
                 translateY={8}
                 waveWidth={0.8}
               >
-                {" От команды."}
+                {" От команды"}
               </ScrollBlurText>
             </h2>
           </div>

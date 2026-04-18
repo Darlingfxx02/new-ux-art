@@ -99,7 +99,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-screen">
         <Container className="relative flex h-full items-end pb-8 md:pb-12">
           <p className="text-base font-semibold text-white md:text-lg [mix-blend-mode:difference]">
-            Сделаем интернет красивее.
+            Сделаем интернет красивее
           </p>
         </Container>
       </div>
