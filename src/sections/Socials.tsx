@@ -65,6 +65,22 @@ export function Socials() {
             />
           </div>
         </div>
+
+        <div className="md:col-span-12">
+          <ScrollBlurReveal
+            className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl md:rounded-[2rem]"
+            maxBlur={14}
+            translateY={20}
+            minOpacity={0.2}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=80"
+              alt="Команда UXART"
+              className="block h-full w-full object-cover"
+              loading="lazy"
+            />
+          </ScrollBlurReveal>
+        </div>
       </Container>
     </section>
   );

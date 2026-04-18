@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Container } from "@/components/primitives/Container";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { cases } from "@/content/cases";
 import { ScrollBlurText } from "@/motion/ScrollBlurText";
 
